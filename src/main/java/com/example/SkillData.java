@@ -10,6 +10,16 @@ public class SkillData {
     private int woodcuttingLevel;
     private double constitutionXp;
     private int constitutionLevel;
+    private double excavationXp;
+    private int excavationLevel;
+    private double fishingXp;
+    private int fishingLevel;
+    private double combatXp;
+    private int combatLevel;
+    private double defenseXp;
+    private int defenseLevel;
+    private double agilityXp;
+    private int agilityLevel;
 
     public void addXP(String skill, double xp) {
         if ("Mining".equals(skill)) {
@@ -21,6 +31,21 @@ public class SkillData {
         } else if ("Constitution".equals(skill)) {
             this.constitutionXp += xp;
             this.constitutionLevel = calculateLevel(this.constitutionXp);
+        } else if ("Excavation".equals(skill)) {
+            this.excavationXp += xp;
+            this.excavationLevel = calculateLevel(this.excavationXp);
+        } else if ("Fishing".equals(skill)) {
+            this.fishingXp += xp;
+            this.fishingLevel = calculateLevel(this.fishingXp);
+        } else if ("Combat".equals(skill)) {
+            this.combatXp += xp;
+            this.combatLevel = calculateLevel(this.combatXp);
+        } else if ("Defense".equals(skill)) {
+            this.defenseXp += xp;
+            this.defenseLevel = calculateLevel(this.defenseXp);
+        } else if ("Agility".equals(skill)) {
+            this.agilityXp += xp;
+            this.agilityLevel = calculateLevel(this.agilityXp);
         }
     }
 
@@ -44,6 +69,16 @@ public class SkillData {
         output.putInt("WoodcuttingLevel", woodcuttingLevel);
         output.putDouble("ConstitutionXp", constitutionXp);
         output.putInt("ConstitutionLevel", constitutionLevel);
+        output.putDouble("ExcavationXp", excavationXp);
+        output.putInt("ExcavationLevel", excavationLevel);
+        output.putDouble("FishingXp", fishingXp);
+        output.putInt("FishingLevel", fishingLevel);
+        output.putDouble("CombatXp", combatXp);
+        output.putInt("CombatLevel", combatLevel);
+        output.putDouble("DefenseXp", defenseXp);
+        output.putInt("DefenseLevel", defenseLevel);
+        output.putDouble("AgilityXp", agilityXp);
+        output.putInt("AgilityLevel", agilityLevel);
     }
 
     public void readFrom(ValueInput input) {
@@ -53,6 +88,16 @@ public class SkillData {
         this.woodcuttingLevel = input.getIntOr("WoodcuttingLevel", 0);
         this.constitutionXp = input.getDoubleOr("ConstitutionXp", 0.0);
         this.constitutionLevel = input.getIntOr("ConstitutionLevel", 0);
+        this.excavationXp = input.getDoubleOr("ExcavationXp", 0.0);
+        this.excavationLevel = input.getIntOr("ExcavationLevel", 0);
+        this.fishingXp = input.getDoubleOr("FishingXp", 0.0);
+        this.fishingLevel = input.getIntOr("FishingLevel", 0);
+        this.combatXp = input.getDoubleOr("CombatXp", 0.0);
+        this.combatLevel = input.getIntOr("CombatLevel", 0);
+        this.defenseXp = input.getDoubleOr("DefenseXp", 0.0);
+        this.defenseLevel = input.getIntOr("DefenseLevel", 0);
+        this.agilityXp = input.getDoubleOr("AgilityXp", 0.0);
+        this.agilityLevel = input.getIntOr("AgilityLevel", 0);
     }
 
     public double getMiningXp() { return miningXp; }
@@ -61,4 +106,14 @@ public class SkillData {
     public int getWoodcuttingLevel() { return woodcuttingLevel; }
     public double getConstitutionXp() { return constitutionXp; }
     public int getConstitutionLevel() { return constitutionLevel; }
+    public double getExcavationXp() { return excavationXp; }
+    public int getExcavationLevel() { return excavationLevel; }
+    public double getFishingXp() { return fishingXp; }
+    public int getFishingLevel() { return fishingLevel; }
+    public double getCombatXp() { return combatXp; }
+    public int getCombatLevel() { return combatLevel; }
+    public double getDefenseXp() { return defenseXp; }
+    public int getDefenseLevel() { return defenseLevel; }
+    public double getAgilityXp() { return agilityXp; }
+    public int getAgilityLevel() { return agilityLevel; }
 }
