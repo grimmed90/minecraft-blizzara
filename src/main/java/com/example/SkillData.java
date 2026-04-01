@@ -61,4 +61,8 @@ public class SkillData {
     public int getWoodcuttingLevel() { return woodcuttingLevel; }
     public double getConstitutionXp() { return constitutionXp; }
     public int getConstitutionLevel() { return constitutionLevel; }
+
+    public int getTotalLevel() {
+        return miningLevel + woodcuttingLevel + constitutionLevel;
+    }
 }
