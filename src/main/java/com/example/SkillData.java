@@ -11,17 +11,31 @@ public class SkillData {
     private double constitutionXp;
     private int constitutionLevel;
 
-    public void addXP(String skill, double xp) {
+    public boolean addXP(String skill, double xp) {
+        boolean leveledUp = false;
         if ("Mining".equals(skill)) {
             this.miningXp += xp;
-            this.miningLevel = calculateLevel(this.miningXp);
+            int newLevel = calculateLevel(this.miningXp);
+            if (newLevel > this.miningLevel) {
+                leveledUp = true;
+                this.miningLevel = newLevel;
+            }
         } else if ("Woodcutting".equals(skill)) {
             this.woodcuttingXp += xp;
-            this.woodcuttingLevel = calculateLevel(this.woodcuttingXp);
+            int newLevel = calculateLevel(this.woodcuttingXp);
+            if (newLevel > this.woodcuttingLevel) {
+                leveledUp = true;
+                this.woodcuttingLevel = newLevel;
+            }
         } else if ("Constitution".equals(skill)) {
             this.constitutionXp += xp;
-            this.constitutionLevel = calculateLevel(this.constitutionXp);
+            int newLevel = calculateLevel(this.constitutionXp);
+            if (newLevel > this.constitutionLevel) {
+                leveledUp = true;
+                this.constitutionLevel = newLevel;
+            }
         }
+        return leveledUp;
     }
 
     private int calculateLevel(double xp) {

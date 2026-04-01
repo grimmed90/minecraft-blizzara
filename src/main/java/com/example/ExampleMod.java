@@ -120,10 +120,22 @@ public class ExampleMod implements ModInitializer {
         return Math.max(1.0, hardness * 2.0);
     }
 
-    private void addXp(Player player, String skill, double xp) {
+    private boolean addXp(Player player, String skill, double xp) {
         if (player instanceof IPlayerSkillData skillDataPlayer) {
-            skillDataPlayer.getSkillData().addXP(skill, xp);
+            boolean leveledUp = skillDataPlayer.getSkillData().addXP(skill, xp);
+            if (leveledUp && player instanceof ServerPlayer serverPlayer) {
+                ServerLevel serverLevel = (ServerLevel) serverPlayer.level();
+                serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                        net.minecraft.sounds.SoundSource.PLAYERS,
+                        1.0F, 1.0F);
+                serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.TOTEM_OF_UNDYING,
+                        player.getX(), player.getY() + 1.0, player.getZ(),
+                        20, 0.5, 0.5, 0.5, 0.1);
+            }
+            return leveledUp;
         }
+        return false;
     }
 
     private int getMiningLevel(Player player) {
