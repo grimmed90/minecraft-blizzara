@@ -152,6 +152,7 @@ public class SkillData {
     public int getAgilityLevel() { return agilityLevel; }
 
     public int getTotalLevel() {
-        return miningLevel + woodcuttingLevel + constitutionLevel + excavationLevel + fishingLevel + combatLevel + defenseLevel + agilityLevel;
+        return miningLevel + woodcuttingLevel + constitutionLevel +
+               excavationLevel + fishingLevel + combatLevel + defenseLevel + agilityLevel;
     }
 }
