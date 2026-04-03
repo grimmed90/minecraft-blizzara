@@ -2,6 +2,8 @@ package com.example;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -45,6 +47,27 @@ public class ExampleMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing RPG Mod");
+
+        PayloadTypeRegistry.serverboundPlay().register(OpenSkillsMenuPayload.ID, OpenSkillsMenuPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SkillUpdatePayload.ID, SkillUpdatePayload.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(OpenSkillsMenuPayload.ID, (payload, context) -> {
+            ServerPlayer player = context.player();
+            if (player instanceof IPlayerSkillData skillDataPlayer) {
+                SkillData data = skillDataPlayer.getSkillData();
+                SkillUpdatePayload response = new SkillUpdatePayload(
+                    data.getMiningLevel(), data.getMiningXp(),
+                    data.getWoodcuttingLevel(), data.getWoodcuttingXp(),
+                    data.getConstitutionLevel(), data.getConstitutionXp(),
+                    data.getExcavationLevel(), data.getExcavationXp(),
+                    data.getFishingLevel(), data.getFishingXp(),
+                    data.getCombatLevel(), data.getCombatXp(),
+                    data.getDefenseLevel(), data.getDefenseXp(),
+                    data.getAgilityLevel(), data.getAgilityXp()
+                );
+                ServerPlayNetworking.send(player, response);
+            }
+        });
 
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
             if (world.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) return;
