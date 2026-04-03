@@ -4,7 +4,9 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"ExampleMixin",
-		"PlayerEntityMixin"
+		"PlayerEntityMixin",
+        "FishingHookMixin",
+        "LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
