@@ -1,9 +1,11 @@
-package com.example;
+package com.aurarpg;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -29,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExampleMod implements ModInitializer {
-    public static final String MOD_ID = "modid";
+    public static final String MOD_ID = "aurarpg";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     private static final TagKey<Block> MINEABLE_PICKAXE = TagKey.create(BuiltInRegistries.BLOCK.key(), Identifier.fromNamespaceAndPath("minecraft", "mineable/pickaxe"));
@@ -42,6 +44,27 @@ public class ExampleMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing ExampleMod...");
+
+        PayloadTypeRegistry.serverboundPlay().register(OpenSkillsMenuPayload.ID, OpenSkillsMenuPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SkillUpdatePayload.ID, SkillUpdatePayload.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(OpenSkillsMenuPayload.ID, (payload, context) -> {
+            ServerPlayer player = context.player();
+            if (player instanceof IPlayerSkillData skillDataPlayer) {
+                SkillData data = skillDataPlayer.getSkillData();
+                SkillUpdatePayload response = new SkillUpdatePayload(
+                    data.getMiningLevel(), data.getMiningXp(),
+                    data.getWoodcuttingLevel(), data.getWoodcuttingXp(),
+                    data.getConstitutionLevel(), data.getConstitutionXp(),
+                    data.getExcavationLevel(), data.getExcavationXp(),
+                    data.getFishingLevel(), data.getFishingXp(),
+                    data.getCombatLevel(), data.getCombatXp(),
+                    data.getDefenseLevel(), data.getDefenseXp(),
+                    data.getAgilityLevel(), data.getAgilityXp()
+                );
+                ServerPlayNetworking.send(player, response);
+            }
+        });
 
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
             if (world instanceof ServerLevel serverWorld && player instanceof ServerPlayer serverPlayer) {

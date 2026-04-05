@@ -1,7 +1,7 @@
-package com.example.mixin;
+package com.aurarpg.mixin;
 
-import com.example.IPlayerSkillData;
-import com.example.SkillData;
+import com.aurarpg.IPlayerSkillData;
+import com.aurarpg.SkillData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
