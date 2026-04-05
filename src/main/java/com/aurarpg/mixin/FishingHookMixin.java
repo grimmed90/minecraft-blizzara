@@ -1,6 +1,6 @@
-package com.example.mixin;
+package com.aurarpg.mixin;
 
-import com.example.IPlayerSkillData;
+import com.aurarpg.IPlayerSkillData;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
@@ -41,8 +41,8 @@ public abstract class FishingHookMixin {
         if (owner instanceof ServerPlayer serverPlayer && !serverPlayer.isCreative()) {
             if (this.hookedIn != null || this.nibble > 0) {
                 // Caught something (fish or entity)
-                com.example.ExampleMod.addXpStatic(serverPlayer, "Fishing", 20.0);
-                com.example.ExampleMod.updateLuckStatic(serverPlayer);
+                com.aurarpg.ExampleMod.addXpStatic(serverPlayer, "Fishing", 20.0);
+                com.aurarpg.ExampleMod.updateLuckStatic(serverPlayer);
             }
         }
     }

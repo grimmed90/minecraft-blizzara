@@ -1,4 +1,4 @@
-package com.example;
+package com.aurarpg;
 
 public interface IPlayerSkillData {
     SkillData getSkillData();

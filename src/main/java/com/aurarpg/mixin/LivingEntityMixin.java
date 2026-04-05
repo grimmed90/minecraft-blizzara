@@ -1,6 +1,6 @@
-package com.example.mixin;
+package com.aurarpg.mixin;
 
-import com.example.IPlayerSkillData;
+import com.aurarpg.IPlayerSkillData;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,8 +41,8 @@ public class LivingEntityMixin {
     protected void jumpFromGround(CallbackInfo ci) {
         if ((Object) this instanceof net.minecraft.server.level.ServerPlayer player) {
             if (!player.isCreative()) {
-                com.example.ExampleMod.addXpStatic(player, "Agility", 1.5);
-                com.example.ExampleMod.updateMovementSpeedStatic(player);
+                com.aurarpg.ExampleMod.addXpStatic(player, "Agility", 1.5);
+                com.aurarpg.ExampleMod.updateMovementSpeedStatic(player);
             }
         }
     }

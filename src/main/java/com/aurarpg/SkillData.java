@@ -1,4 +1,4 @@
-package com.example;
+package com.aurarpg;
 
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
