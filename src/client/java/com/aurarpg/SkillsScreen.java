@@ -22,12 +22,12 @@ public class SkillsScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        // Then super
         super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
 
+        // Draw background first
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-
-        // Custom background
         guiGraphics.blit(BACKGROUND, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         guiGraphics.centeredText(this.font, this.title, x + this.imageWidth / 2, y + 6, 4210752);
@@ -37,6 +37,11 @@ public class SkillsScreen extends Screen {
         int startY = y + 20;
         int yOffsetLeft = 0;
         int yOffsetRight = 0;
+
+        if (this.payload == null) {
+            guiGraphics.text(this.font, "Loading...", startXLeft, startY, 0xFFFFFF);
+            return;
+        }
 
         // Draw Left Column Skills
         yOffsetLeft += drawSkill(guiGraphics, "Mining", payload.miningLevel(), payload.miningXp(), startXLeft, startY + yOffsetLeft);
